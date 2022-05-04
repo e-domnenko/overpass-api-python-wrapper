@@ -74,7 +74,7 @@ class API(object):
             requests_log.setLevel(logging.DEBUG)
             requests_log.propagate = True
 
-    def get(self, query, responseformat="geojson", verbosity="body", build=True, date=''):
+    def get(self, query, responseformat="geojson", verbosity="body", build=True, date='', feature_id=''):
         """Pass in an Overpass query in Overpass QL.
 
         :param query: the Overpass QL query to send to the endpoint
@@ -134,7 +134,7 @@ class API(object):
             return response
 
         # construct geojson
-        return self._as_geojson(response["elements"])
+        return self._as_geojson(response["elements"], feature_id)
 
     @staticmethod
     def _api_status() -> dict:
@@ -261,7 +261,7 @@ class API(object):
             r.encoding = "utf-8"
             return r
 
-    def _as_geojson(self, elements):
+    def _as_geojson(self, elements, feature_id):
         ids_already_seen = set()
         features = []
         geometry = None
@@ -331,7 +331,7 @@ class API(object):
 
             if geometry:
                 feature = geojson.Feature(
-                    id=elem["id"],
+                    id="{}/{}".format(elem_type, elem["id"]) if feature_id == "full" else elem["id"],
                     geometry=geometry,
                     properties=elem_tags
                 )
