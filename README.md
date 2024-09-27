@@ -123,6 +123,10 @@ We will construct a valid Overpass QL query from the parameters you set by defau
 You can query the data as it was on a given date. You can give either a standard ISO date alone (YYYY-MM-DD) or a full overpass date and time (YYYY-MM-DDTHH:MM:SSZ, i.e. 2020-04-28T00:00:00Z).
 You can also directly pass a `date` or `datetime` object from the `datetime` library.
 
+#### `feature_id`
+
+Format of features ID in resulting GeoJSON. `number` – only ID of OSM entity. `full` – include OSM entity type and ID like `'node/5039082801'` or `'way/149421575'`.
+
 ### Pre-cooked Queries: `MapQuery`, `WayQuery`
 
 In addition to just sending your query and parse the result, `overpass`
